@@ -1,23 +1,32 @@
 package com.geldbeutel.rebalancer;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class Main {
 
-    public static final String BACKUP = "/home/sam/IdeaProjects/Rebalancer2.0/src/com/geldbeutel/rebalancer/Backup.csv";
-    public static final String storedData = "/home/sam/IdeaProjects/Rebalancer2.0/src/com/geldbeutel/rebalancer/storedData.csv";
+    public static final String BACKUP = "/home/sam/IdeaProjects/Rebalancer2.0/src/com/geldbeutel/rebalancer/savefiles/Backup.csv";
+    public static final String DATA_DIRECTORY = "/home/sam/IdeaProjects/Rebalancer2.0/src/com/geldbeutel/rebalancer/savefiles/";
+    public static final String LAST_SAVE_FILE = String.format("%s%s", DATA_DIRECTORY, "LastSaveFile.csv");
+
+    public static final String DATE_FORMAT_NOW = "dd-MM-yyyy (HH:mm:ss)";
 
     public static void main(String[] args) throws IOException {
 
 
-        Portfolio p = createPortfolio("Kommer Faktor Portfolio", loadData());
-        p.portfolioRebalance(3350);
+        Portfolio p = createPortfolio("Kommer Faktor Portfolio", loadData(true));
         System.out.println(p.toString());
-        saveData(p);
 
 
     }
 
+
+    public static String getDate(){
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        return sdf.format(cal.getTime());
+    }
 
     public static Portfolio createPortfolio(String name, String data) {
         Portfolio p = new Portfolio(name);
@@ -32,13 +41,23 @@ public class Main {
         return p;
     }
 
-    public static String loadData() throws IOException {
-        String inputData = "";
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(storedData));
-        for (String s = bufferedReader.readLine(); s != null ; s = bufferedReader.readLine()) {
-            inputData += s + "\n";
+    public static String loadData(boolean lastSave) throws IOException {
+        if (lastSave) {
+            String inputData = "";
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(LAST_SAVE_FILE));
+            BufferedReader bufferedReader2 = new BufferedReader(new FileReader(bufferedReader.readLine().strip()));
+            for (String s = bufferedReader2.readLine(); s != null ; s = bufferedReader2.readLine()) {
+                inputData += s + "\n";
+            }
+            return inputData;
+        } else {
+            String inputData = "";
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(BACKUP));
+            for (String s = bufferedReader.readLine(); s != null ; s = bufferedReader.readLine()) {
+                inputData += s + "\n";
+            }
+            return inputData;
         }
-        return inputData;
     }
 
     public static void saveData(Portfolio p) throws IOException {
@@ -55,10 +74,16 @@ public class Main {
             output += subarray[0] + ", " + subarray[1] + "\n";
         }
 
-        FileWriter fileWriter = new FileWriter(storedData, false); //vorübergehen gespeichert in storedData
+        FileWriter fileWriter = new FileWriter(String.format("%s%s%s%s", DATA_DIRECTORY, "SaveFile_", getDate(), ".csv"), false);
+        FileWriter fileWriter2 = new FileWriter(LAST_SAVE_FILE, false);
+
         fileWriter.write("Name, Preis, Depotstand, Gewichtung\n");
         fileWriter.write(output);
         fileWriter.close();
+
+        fileWriter2.write(String.format("%s%s%s%s", DATA_DIRECTORY, "SaveFile_", getDate(), ".csv"));
+        fileWriter2.close();
+
     }
 
 }
