@@ -13,6 +13,9 @@ public class Portfolio {
     }
 
 
+
+
+
     public void portfolioRebalance(double investment){
         // Bestimmung des Zielbetrages
         double zielbetrag;
@@ -31,7 +34,6 @@ public class Portfolio {
         } else {
             zielbetrag = (depotstandAusgeben() + investment) / produktliste.size();
         }
-
         // Berechnungen
         System.out.println("Handlungsempfehlung: ");
         Collections.sort(produktliste, new Comparator<ETF>() {
@@ -45,33 +47,28 @@ public class Portfolio {
             }
         }); // sortieren nach dem Preis
         double restbetrag = investment;
-        System.out.printf("%7s  %10s  %12s  %20s\n", "Anteile", "Kosten", "Neuer Stand", "Name");
+        //System.out.printf("%7s  %10s  %12s  %20s\n", "Anteile", "Kosten", "Neuer Stand", "Name");
+        System.out.printf("%25s %10s %10s %20s\n", "Name", "Anteile", "Kosten", "neuer Depotstand");
         for (int i = 0; i < produktliste.size(); i++){
             int anteileCounter = 0;
             if (produktliste.get(i).getDepotwert() < (zielbetrag - (produktliste.get(i).getPreis() / 2)) &&
                     restbetrag >= produktliste.get(i).getPreis() ){
+                restbetrag--; // 1€ Gebühr pro Transaktion!
                 do{
-                    restbetrag--;
                     produktliste.get(i).setDepotwert(produktliste.get(i).getDepotwert() + produktliste.get(i).getPreis());
                     anteileCounter++;
                     restbetrag -= produktliste.get(i).getPreis();
                 } while ( Math.abs(zielbetrag - produktliste.get(i).getDepotwert()) >
                         (produktliste.get(i).getPreis() / 2 ) && restbetrag >= produktliste.get(i).getPreis());
             }
-
             double kosten = anteileCounter * produktliste.get(i).getPreis();
-
-            System.out.printf("%7s  %10s  %12s  %20s\n", anteileCounter, Math.round(kosten * 100.00) /100.00,
-                    Math.round(produktliste.get(i).getDepotwert() * 100.0) /100.0, produktliste.get(i).getName());
-            /*System.out.println("Anteile: " + anteileCounter + "\t Kosten:" +
-                    " " + Math.round(kosten * 100.00) /100.00  + "\t neuer Stand:" +
-                    " " + Math.round(this.produktliste[i].depotwert * 100.0) /100.0 + "\t Name:" +
-                    " " + this.produktliste[i].name );*/
-
+            System.out.printf("%25s %10s %10.2f %20.2f\n", produktliste.get(i).getName(), anteileCounter, kosten, produktliste.get(i).getDepotwert() );
         }
-        System.out.println(String.format("Zielbetrag: %.2f", zielbetrag));
-        System.out.println("Der Restbetrag: " + Math.round(restbetrag * 100.0) /100.0);
+        System.out.println(String.format("%n%16s %10.2f%n%16s %10.2f%n", "Der Restbetrag: ", restbetrag , "Zielbetrag: ", zielbetrag));
     }
+
+
+
 
     public double depotstandAusgeben(){
         double sum = 0;
