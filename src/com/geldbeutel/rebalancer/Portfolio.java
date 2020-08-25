@@ -7,6 +7,7 @@ public class Portfolio {
     private String name;
     private LinkedList<ETF> produktliste;
 
+
     public Portfolio(String name){
         this.name = name;
         this.produktliste = new LinkedList<ETF>();
@@ -14,7 +15,22 @@ public class Portfolio {
 
 
 
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (ETF etf : produktliste) s.append(etf.toString());
+        s.append(String.format("Der Depostand liegt bei: %.2f%n", depotstandAusgeben()));
+        return s.toString();
+    }
 
+
+    public double depotstandAusgeben(){
+        double sum = 0;
+        for (ETF etf : produktliste) {
+            sum += etf.getDepotwert();
+        }
+        return sum;
+    }
 
     public void portfolioRebalance(double investment){
         // Bestimmung des Zielbetrages
@@ -67,30 +83,29 @@ public class Portfolio {
         System.out.println(String.format("%n%16s %10.2f%n%16s %10.2f%n", "Der Restbetrag: ", restbetrag , "Zielbetrag: ", zielbetrag));
     }
 
-
-
-
-    public double depotstandAusgeben(){
-        double sum = 0;
-        for (ETF etf : produktliste) {
-            sum += etf.getDepotwert();
-        }
-        return sum;
+    // --- GETTER AND SETTER --- //
+    public String getName(){
+        return this.name;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder s = new StringBuilder();
-        for (ETF etf : produktliste) s.append(etf.toString());
-        s.append(String.format("Der Depostand liegt bei: %.2f%n", depotstandAusgeben()));
-        return s.toString();
+    public void setName(String name) {
+        this.name = name;
     }
 
-    // Getter und Setter
-    public String getName(){ return this.name; }
-
-    public void setName(String name) { this.name = name; }
-
-    public LinkedList<ETF> getProduktliste(){ return this.produktliste; }
+    public LinkedList<ETF> getProduktliste(){
+        return this.produktliste;
+    }
 
 }
+
+// --- EXAMPLE HOW TO OVERRIDE THE COMPARATOR METHOD TO SORT IN A SPECIFIC WAY --- //
+/*Collections.sort(produktliste, new Comparator<ETF>() {
+    @Override
+    public int compare(ETF etf, ETF t1) {
+        if (etf.getPreis() == t1.getPreis()) {
+            return 0;
+                } else {
+                    return etf.getPreis() > t1.getPreis() ? -1 : 1;
+                }
+           }
+       }); */

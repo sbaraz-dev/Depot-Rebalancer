@@ -23,7 +23,7 @@ public class ETF implements Comparable<ETF>{
                 ,this.name, this.preis, this.depotwert, this.gewichtung);
     }
 
-    // Default sortieren nach Name
+    // --- COMPARABLE INTERFACE OVERRITTEN METHODS --- //
     @Override
     public int compareTo(ETF etf) { return this.name.compareTo(etf.name); }
 
@@ -42,29 +42,44 @@ public class ETF implements Comparable<ETF>{
     }
 
 
+    // --- GETTER AND SETTER --- //
+    public String getName(){
+        return name;
+    }
 
-    //Getter und Setter
-    public String getName(){ return name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public double getPreis() {
+        return preis;
+    }
 
-    public double getPreis() { return preis; }
+    public void setPreis(double preis) {
+        this.preis = preis;
+    }
 
-    public void setPreis(double preis) { this.preis = preis; }
+    public double getDepotwert() {
+        return depotwert;
+    }
 
-    public double getDepotwert() { return depotwert; }
+    public void setDepotwert(double depotwert) {
+        this.depotwert = depotwert;
+    }
 
-    public void setDepotwert(double depotwert) { this.depotwert = depotwert; }
+    public int getGewichtung() {
+        return gewichtung;
+    }
 
-    public int getGewichtung() { return gewichtung; }
-
-    public void setGewichtung(int gewichtung) { this.gewichtung = gewichtung; }
+    public void setGewichtung(int gewichtung) {
+        this.gewichtung = gewichtung;
+    }
 
 
 }
 
 
-// Muster zum Überschreiben
+// EXAMPLE FOR OVERRIDING THE COMPARABLE METHOD
 /*    @Override
     public int compare(ETF etf, ETF t1) {
         if (etf.preis == t1.preis) {

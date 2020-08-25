@@ -21,7 +21,7 @@ public class Main {
 
     }
 
-
+    // --- GETDATE METHOD FOR LATER USE --- //
     public static String getDate(){
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
@@ -41,6 +41,8 @@ public class Main {
         return p;
     }
 
+
+    // --- CREATE AND LOAD THE DATA --- //
     public static String loadData(boolean lastSave) throws IOException {
         if (lastSave) {
             String inputData = "";
