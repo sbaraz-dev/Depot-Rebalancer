@@ -14,8 +14,12 @@ public class Main {
 
 
 
-        Portfolio p = createPortfolio("probe", loadData());
+        Portfolio p = createPortfolio("Kommer Faktor Portfolio", loadData());
         System.out.println(p.toString());
+
+
+        p.portfolioRebalance(2000);
+        p.portfolioRebalance(200);
 
 
 

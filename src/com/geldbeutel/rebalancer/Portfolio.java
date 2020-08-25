@@ -33,8 +33,7 @@ public class Portfolio {
         }
 
         // Berechnungen
-        System.out.println("Das Rebalancing lauter wie folgt: ");
-        System.out.println("Zielbetrag: " + zielbetrag);
+        System.out.println("Handlungsempfehlung: ");
         Collections.sort(produktliste, new Comparator<ETF>() {
             @Override
             public int compare(ETF etf, ETF t1) {
@@ -70,6 +69,7 @@ public class Portfolio {
                     " " + this.produktliste[i].name );*/
 
         }
+        System.out.println(String.format("Zielbetrag: %.2f", zielbetrag));
         System.out.println("Der Restbetrag: " + Math.round(restbetrag * 100.0) /100.0);
     }
 
@@ -85,6 +85,7 @@ public class Portfolio {
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (ETF etf : produktliste) s.append(etf.toString());
+        s.append(String.format("Der Depostand liegt bei: %.2f%n", depotstandAusgeben()));
         return s.toString();
     }
 

@@ -19,7 +19,7 @@ public class ETF implements Comparable<ETF>{
 
     @Override
     public String toString(){
-        return String.format("Name:\t%-25s\t Preis:\t%+-10.2f\t Depotwert:\t%+-10.2f\t Gewichtung:\t%-10d%n"
+        return String.format("Name:\t%-25s\t Preis:\t%8.2f\t Depotwert:\t%-10.2f\t Gewichtung:\t%-10d%n"
                 ,this.name, this.preis, this.depotwert, this.gewichtung);
     }
 
