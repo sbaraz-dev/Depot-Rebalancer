@@ -1,7 +1,5 @@
 package com.geldbeutel.rebalancer;
 
-import java.util.Comparator;
-
 public class ETF implements Comparable<ETF>{
 
     private static int etfcounter = 0;

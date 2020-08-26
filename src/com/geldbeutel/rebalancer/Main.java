@@ -14,9 +14,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-
         Portfolio p = createPortfolio("Kommer Faktor Portfolio", loadData(true));
         System.out.println(p.toString());
+        p.portfolioRebalance(1000);
+        System.out.println(p.toString());
+        saveData(p);
 
 
     }
