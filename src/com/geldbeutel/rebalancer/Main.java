@@ -8,13 +8,13 @@ public class Main {
 
     public static final String BACKUP = "/home/sam/IdeaProjects/Rebalancer2.0/src/com/geldbeutel/rebalancer/savefiles/Backup.csv";
     public static final String DATA_DIRECTORY = "/home/sam/IdeaProjects/Rebalancer2.0/src/com/geldbeutel/rebalancer/savefiles/";
-    public static final String LAST_SAVE_FILE = String.format("%s%s", DATA_DIRECTORY, "LastSaveFile.csv");
+    public static final String LAST_SAVE_FILE = "/home/sam/IdeaProjects/Rebalancer2.0/src/com/geldbeutel/rebalancer/savefiles/LastSaveFile.csv";
 
-    public static final String DATE_FORMAT_NOW = "dd-MM-yyyy (HH:mm:ss)";
+    public static final String DATE_FORMAT_NOW = "dd-MM-yyyy (HH-mm-ss)";
 
     public static void main(String[] args) throws IOException {
 
-        Portfolio p = createPortfolio("Kommer Faktor Portfolio", loadData(true));
+        Portfolio p = createPortfolio("Kommer Faktor Portfolio", loadData(false));
         System.out.println(p.toString());
         p.portfolioRebalance(1000);
         System.out.println(p.toString());
