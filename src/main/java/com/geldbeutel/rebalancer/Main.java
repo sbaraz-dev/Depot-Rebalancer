@@ -14,7 +14,7 @@ public class Main {
 
     public static final String DATE_FORMAT_NOW = "dd-MM-yyyy (HH-mm-ss)";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         Portfolio p = createPortfolio("Kommer Faktor Portfolio", loadData(false));
         System.out.println(p.toString());

@@ -17,7 +17,7 @@ public class Scraper {
             "https://de.finance.yahoo.com/quote/IUSN.DE?p=IUSN.DE&.tsrc=fin-srch"};
     public static final String[] NAMES = {"Momentum: ", "Quality: ", "EM IMI: ", "Value: ", "Small Cap: "};
 
-    public static void main() {
+    public static void main() throws InterruptedException {
         //webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         LinkedList<String> liste = new LinkedList<String>();
 
@@ -26,6 +26,7 @@ public class Scraper {
 
         for (int i = 0; i < PATHS.length; i++) {
             webDriver.get(String.format("%s", PATHS[i]));
+            Thread.sleep(2000);
             //webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             // AUF POPUPS PRÜFEN
             if (webDriver.findElements(By.xpath("//button[@name='agree']")).size() != 0) {

@@ -26,6 +26,15 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.8.1</version>
         </dependency>
+
+
+
+        <dependency>
+            <groupId>de.slackspace</groupId>
+            <artifactId>openkeepass</artifactId>
+            <version>0.8.1</version>
+        </dependency>
+
     </dependencies>
 
 
