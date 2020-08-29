@@ -1,5 +1,7 @@
 package com.geldbeutel.rebalancer;
 
+import com.geldbeutel.selenium_scraper.Scraper;
+
 import java.util.*;
 
 public class Portfolio {
@@ -14,6 +16,16 @@ public class Portfolio {
     }
 
 
+    public void preisAktualisieren() throws InterruptedException {
+        Scraper.main();
+        for (String el : Main.liste) {
+            for (int i = 0; i < produktliste.size(); i++) {
+                if (produktliste.get(i).getName().contains(el.split(": ")[0])) {
+                    produktliste.get(i).setPreis(Double.parseDouble(el.split(": ")[1].replaceAll(",", ".")));
+                }
+            }
+        }
+    }
 
     @Override
     public String toString() {

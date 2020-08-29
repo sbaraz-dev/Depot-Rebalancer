@@ -1,9 +1,11 @@
 package com.geldbeutel.selenium_scraper;
 
+import com.geldbeutel.rebalancer.Main;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
@@ -21,8 +23,13 @@ public class Scraper {
         //webDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         LinkedList<String> liste = new LinkedList<String>();
 
-        System.setProperty("webdriver.gecko.driver", "/home/sam/IdeaProjects/geckodriver");
-        WebDriver webDriver = new FirefoxDriver();
+        //System.setProperty("webdriver.gecko.driver", "/home/sam/IdeaProjects/geckodriver");
+        System.setProperty("webdriver.gecko.driver", "C:\\Users\\User\\IdeaProjects\\geckodriver.exe");
+
+        FirefoxOptions options = new FirefoxOptions();
+        options.addArguments("--headless");
+
+        WebDriver webDriver = new FirefoxDriver(options);
 
         for (int i = 0; i < PATHS.length; i++) {
             webDriver.get(String.format("%s", PATHS[i]));
@@ -41,7 +48,9 @@ public class Scraper {
         }
 
         webDriver.close();
-        System.out.println(liste.toString());
+
+        Main.liste = liste;
+
 
     }
 

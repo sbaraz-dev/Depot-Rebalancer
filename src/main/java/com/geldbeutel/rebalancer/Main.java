@@ -5,24 +5,32 @@ import com.geldbeutel.selenium_scraper.Scraper;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.LinkedList;
 
 public class Main {
 
-    public static final String BACKUP = "/home/sam/IdeaProjects/Rebalancer2.0/src/main/java/com/geldbeutel/rebalancer/savefiles/Backup.csv";
-    public static final String DATA_DIRECTORY = "/home/sam/IdeaProjects/Rebalancer2.0/src/main/java/com/geldbeutel/rebalancer/savefiles/";
-    public static final String LAST_SAVE_FILE = "/home/sam/IdeaProjects/Rebalancer2.0/src/main/java/com/geldbeutel/rebalancer/savefiles/LastSaveFile.csv";
+    //public static final String BACKUP = "/home/sam/IdeaProjects/Rebalancer2.0/src/main/java/com/geldbeutel/rebalancer/savefiles/Backup.csv";
+    //public static final String DATA_DIRECTORY = "/home/sam/IdeaProjects/Rebalancer2.0/src/main/java/com/geldbeutel/rebalancer/savefiles/";
+    //public static final String LAST_SAVE_FILE = "/home/sam/IdeaProjects/Rebalancer2.0/src/main/java/com/geldbeutel/rebalancer/savefiles/LastSaveFile.csv";
+    public static final String BACKUP = "C:\\Users\\User\\IdeaProjects\\Depot-Rebalancer\\src\\main\\java\\com\\geldbeutel\\rebalancer\\savefiles\\Backup.csv";
+    public static final String DATA_DIRECTORY = "C:\\Users\\User\\IdeaProjects\\Depot-Rebalancer\\src\\main\\java\\com\\geldbeutel\\rebalancer\\savefiles\\";
+    public static final String LAST_SAVE_FILE = "C:\\Users\\User\\IdeaProjects\\Depot-Rebalancer\\src\\main\\java\\com\\geldbeutel\\rebalancer\\savefiles\\LastSaveFile.csv";
 
     public static final String DATE_FORMAT_NOW = "dd-MM-yyyy (HH-mm-ss)";
+
+    public static LinkedList<String> liste;
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
         Portfolio p = createPortfolio("Kommer Faktor Portfolio", loadData(false));
         System.out.println(p.toString());
-        p.portfolioRebalance(1000);
+        p.preisAktualisieren();
+        //p.portfolioRebalance(1000);
+        //System.out.println(p.toString());
+        //saveData(p);
+        //Scraper.main();
+        //System.out.println(liste.toString());
         System.out.println(p.toString());
-        saveData(p);
-        Scraper.main();
-
 
     }
 
