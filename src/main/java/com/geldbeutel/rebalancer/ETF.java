@@ -6,6 +6,7 @@ public class ETF implements Comparable<ETF>{
 
     private String name;
     private double preis;
+    private int anteile;
     private double depotwert;
     private int gewichtung = 20;
 
@@ -17,8 +18,8 @@ public class ETF implements Comparable<ETF>{
 
     @Override
     public String toString(){
-        return String.format("Name:\t%-25s\t Preis:\t%8.2f\t Depotwert:\t%-10.2f\t Gewichtung:\t%-10d%n"
-                ,this.name, this.preis, this.depotwert, this.gewichtung);
+        return String.format("Name:\t%-25s\t Preis:\t%8.2f\t Anteile:%8d\t Depotwert:\t%-10.2f\t Gewichtung:\t%-10d%n"
+                ,this.name, this.preis, this.anteile, this.depotwert, this.gewichtung).replaceAll(",",".");
     }
 
     // --- COMPARABLE INTERFACE OVERRITTEN METHODS --- //
@@ -34,6 +35,7 @@ public class ETF implements Comparable<ETF>{
                     && this.preis == ((ETF) obj).preis
                     && this.depotwert == ((ETF) obj).depotwert
                     && this.gewichtung == ((ETF) obj).gewichtung
+                    && this.anteile == ((ETF) obj).anteile
             ) return true;
             return false;
         }
@@ -71,6 +73,14 @@ public class ETF implements Comparable<ETF>{
 
     public void setGewichtung(int gewichtung) {
         this.gewichtung = gewichtung;
+    }
+
+    public void setAnteile(int anteile) {
+        this.anteile = anteile;
+    }
+
+    public int getAnteile() {
+        return anteile;
     }
 
 

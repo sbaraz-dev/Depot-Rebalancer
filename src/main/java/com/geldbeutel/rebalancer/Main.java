@@ -22,15 +22,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        Portfolio p = createPortfolio("Kommer Faktor Portfolio", loadData(false));
+        Portfolio p = createPortfolio("Kommer Faktor Portfolio", loadData(true));
+        //p.preisAktualisieren();
         System.out.println(p.toString());
-        p.preisAktualisieren();
-        //p.portfolioRebalance(1000);
-        //System.out.println(p.toString());
+        p.portfolioRebalance(5000);
+        System.out.println(p.toString());
         //saveData(p);
-        //Scraper.main();
-        //System.out.println(liste.toString());
-        System.out.println(p.toString());
+
 
     }
 
@@ -41,6 +39,7 @@ public class Main {
         return sdf.format(cal.getTime());
     }
 
+    // -- CREATE A NEW PORTFOLIO --- //
     public static Portfolio createPortfolio(String name, String data) {
         Portfolio p = new Portfolio(name);
         String[] lines = data.split("\n");
@@ -48,8 +47,9 @@ public class Main {
             String[] entries = lines[i].split("\\s*,\\s*");
             p.getProduktliste().add(new ETF(entries[0]));
             p.getProduktliste().get(i - 1).setPreis(Double.parseDouble(entries[1]));
-            p.getProduktliste().get(i - 1).setDepotwert(Double.parseDouble(entries[2]));
-            p.getProduktliste().get(i - 1).setGewichtung(Integer.parseInt(entries[3]));
+            p.getProduktliste().get(i - 1).setAnteile(Integer.parseInt(entries[2]));
+            p.getProduktliste().get(i - 1).setDepotwert(Double.parseDouble(entries[1]) * Integer.parseInt(entries[2]));
+            p.getProduktliste().get(i - 1).setGewichtung(Integer.parseInt(entries[4]));
         }
         return p;
     }
@@ -82,6 +82,7 @@ public class Main {
         for (int i = 0; i < arrayString.length - 1; i++){
             String[] subarray = arrayString[i].split("\\s*Preis:\\s*");
             subarray[0] = subarray[0].replace("Name:", "").trim();
+            subarray[1] = subarray[1].replaceAll("Anteile:", " ").trim();
             subarray[1] = subarray[1].replaceAll("Depotwert:", " ").trim();
             subarray[1] = subarray[1].replaceAll("Gewichtung:", " ").trim();
             subarray[1] = subarray[1].replaceAll("\t", " ");

@@ -22,6 +22,7 @@ public class Portfolio {
             for (int i = 0; i < produktliste.size(); i++) {
                 if (produktliste.get(i).getName().contains(el.split(": ")[0])) {
                     produktliste.get(i).setPreis(Double.parseDouble(el.split(": ")[1].replaceAll(",", ".")));
+                    produktliste.get(i).setDepotwert(produktliste.get(i).getAnteile() * produktliste.get(i).getPreis());
                 }
             }
         }
@@ -31,7 +32,7 @@ public class Portfolio {
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (ETF etf : produktliste) s.append(etf.toString());
-        s.append(String.format("Der Depostand liegt bei: %.2f%n", depotstandAusgeben()));
+        s.append(String.format("Der Depostand liegt bei: %.2f%n", depotstandAusgeben()).replaceAll(",","."));
         return s.toString();
     }
 
@@ -77,6 +78,7 @@ public class Portfolio {
         double restbetrag = investment;
         //System.out.printf("%7s  %10s  %12s  %20s\n", "Anteile", "Kosten", "Neuer Stand", "Name");
         System.out.printf("%25s %10s %10s %20s\n", "Name", "Anteile", "Kosten", "neuer Depotstand");
+
         for (int i = 0; i < produktliste.size(); i++){
             int anteileCounter = 0;
             if (produktliste.get(i).getDepotwert() < (zielbetrag - (produktliste.get(i).getPreis() / 2)) &&
@@ -90,8 +92,10 @@ public class Portfolio {
                         (produktliste.get(i).getPreis() / 2 ) && restbetrag >= produktliste.get(i).getPreis());
             }
             double kosten = anteileCounter * produktliste.get(i).getPreis();
+            produktliste.get(i).setAnteile(produktliste.get(i).getAnteile() + anteileCounter);
             System.out.printf("%25s %10s %10.2f %20.2f\n", produktliste.get(i).getName(), anteileCounter, kosten, produktliste.get(i).getDepotwert() );
         }
+
         System.out.println(String.format("%n%16s %10.2f%n%16s %10.2f%n", "Der Restbetrag: ", restbetrag , "Zielbetrag: ", zielbetrag));
     }
 
